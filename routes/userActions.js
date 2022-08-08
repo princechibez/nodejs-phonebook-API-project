@@ -82,15 +82,19 @@ router.patch(
   "/updatecontact/:contactId",
   isAuth,
   contactProperties("editing"),
+  multer({ storage: fileStorage,  fileFilter: fileFilter}).single("profile-image"),
   userControllers.updateContact
 );
 
 router.delete(
   "/deletecontact/:contactId",
   isAuth,
+  multer({ storage: fileStorage,  fileFilter: fileFilter}).single("profile-image"),
   userControllers.deleteContact
 );
 
 router.delete("/deleteallcontacts/", isAuth, userControllers.deleteAllContacts);
+
+// router.delete("/logout", userControllers.logout)
 
 module.exports = router;

@@ -72,7 +72,7 @@ exports.deleteContact = async (req, res, next) => {
         const contactId = req.params.contactId;
         const user = await User.findById(req.userId);
         const newContacts = await user.deleteContact(contactId.toString());
-        if(!newContacts) res.status(400).json("This contact can't be deleted at the moment");
+        if(!newContacts) res.status(400).json("This contact can't be found");
         if(newContacts) res.status(200).json({message: "contact deleted successfully", newContacts })
       } catch (err) {
         next(err);
@@ -100,8 +100,13 @@ exports.updateContactProfilePix = async (req, res, next) => {
             throw error;
         }
         const result = user.updateContactProfilePicture(contactId, image)
-        console.log(result)
+        result ? res.status(201).json({message: "Contact's profile picture updated successfully"}) :
+        res.status(500).json({message: "Couldn't updated your contact's profile picture at the moment"})
     } catch (err) {
         next(err)
     }
 };
+
+// exports.logout = (req, res, next) => {
+//     console.log(req.userId)
+// }
