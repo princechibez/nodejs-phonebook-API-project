@@ -48,7 +48,7 @@ exports.getSingleContact = async (req, res, next) => {
         const user = await User.findById(req.userId);
         const userContact = user.contacts.find(contact => contact._id.toString() === contactId.toString())
         if(!userContact) res.status(200).json("This contact does'nt exist again, seems you've deleted it")
-        if(userContact) res.status(200).json({contacts: { ...userContact._doc }})
+        if(userContact) res.status(200).json({contact: { ...userContact._doc }})
       } catch (err) {
         next(err);
       }

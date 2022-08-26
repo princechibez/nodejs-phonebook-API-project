@@ -7,16 +7,11 @@ const authController = require("../controllers/authcontrollers");
 
 const router = express.Router();
 
-router.post(
+router.put(
   "/signup",
   [
     body("name", "Name must not be empty!").not().isEmpty(),
-    body("password", "Password must be greater than 8 characters").not().isEmpty()
-    .isLength({ min: 8, max: 16 })
-    .custom(async (value, { req }) => {
-      if(value.trim() === "") throw new Error("password must not be empty!");
-    }),
-    body("email")
+    body("email", "Invalid email address")
       .normalizeEmail()
       .isEmail()
       .notEmpty()
@@ -29,8 +24,18 @@ router.post(
           error.statusCode = 400;
           throw error;
         }
+        if(value.trim() === "") {
+          let error = new Error("email address must be provided");
+          error.statusCode = 400;
+          throw error;
+        }
         return true
       }),
+      body("password", "Password must be greater than 8 characters").not().isEmpty()
+      .isLength({ min: 8, max: 16 })
+      .custom(async (value, { req }) => {
+        if(value.trim() === "") throw new Error("password must not be empty!");
+      })
   ],
   authController.postSignup
 );

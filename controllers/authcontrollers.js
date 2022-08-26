@@ -10,17 +10,17 @@ const { validationResult } = require("express-validator");
 const saltRound = process.env.SALT_ROUND;
 const jwt_secret = process.env.JWT_SECRET;
 
-// const transporter = nodemailer.createTransport({
-//   service: "gmail",
-//   auth: {
-//     type: "OAuth2",
-//     user: ,
-//     pass: ,
-//     clientId: ,
-//     clientSecret: ,
-//     refreshToken: ,
-//   }
-// })
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    // type: "OAuth2",
+    user: "nwobiprince8@gmail.com",
+    pass: "38615271",
+    // clientId: ,
+    // clientSecret: ,
+    // refreshToken: ,
+  }
+})
 
 exports.postSignup = async (req, res, next) => {
   // let { name, email, password } = req.body;
@@ -31,6 +31,7 @@ exports.postSignup = async (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
       let error = new Error(errors.array()[0].msg);
+      error.feedBack = { userName, password, email };
       error.statusCode = 401;
       throw error
     }
@@ -52,6 +53,15 @@ exports.postSignup = async (req, res, next) => {
       contacts: []
     });
     await user.save();
+    // transporter.sendMail({
+    //   from: "nwobiprince8@gmail.com",
+    //   to: email,
+    //   subject: "Signup successfull",
+    //   text: "Nice one, we hope you enjoy this application"
+    // }, (err) => {
+    //   if(err) return console.log(err)
+    //   console.log("message sent to email address")
+    // })
     return res.status(201).json({message: "User Created Successfully"})
   } catch (err) {
     next(err);

@@ -3,7 +3,7 @@ const connectDB = require("./database/db");
 require("dotenv/config");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-// const path = require('path');
+const path = require('path');
 
 const Users = require("./models/users");
 const authRoutes = require("./routes/authRoutes");
@@ -11,13 +11,14 @@ const userRoutes = require("./routes/userActions")
 
 const app = express();
 
-app.use(cors({ origin: "*" }));
-// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(cors({ origin: "*", allowedHeaders: "Content-Type, Authorization", methods: "POST, GET, PUT, PATCH, DELETE" }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use("/images", express.static(path.join(__dirname, "images")))
 app.use(bodyParser.json());
 app.use(express.json());
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type Authorization");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, PATCH, DELETE");
   res.setHeader("Access-Control-Allow-Origin", "*");
   next()

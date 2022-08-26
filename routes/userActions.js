@@ -59,7 +59,7 @@ const fileStorage = multer.diskStorage({
 router.post(
   "/add-contact-profile-pix/:contactId",
   isAuth,
-  multer({ storage: fileStorage,  fileFilter: fileFilter}).single("profile-image"),
+  multer({ storage: fileStorage,  fileFilter: fileFilter }).single("profile-image"),
   userControllers.updateContactProfilePix
 );
 
@@ -82,14 +82,12 @@ router.patch(
   "/updatecontact/:contactId",
   isAuth,
   contactProperties("editing"),
-  multer({ storage: fileStorage,  fileFilter: fileFilter}).single("profile-image"),
   userControllers.updateContact
 );
 
 router.delete(
   "/deletecontact/:contactId",
   isAuth,
-  multer({ storage: fileStorage,  fileFilter: fileFilter}).single("profile-image"),
   userControllers.deleteContact
 );
 

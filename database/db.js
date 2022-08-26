@@ -7,7 +7,7 @@ const connectDB = cb => {
     .then(onSuccessfulConnect => {
         cb();
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err.message))
 }
 
 module.exports = connectDB;
