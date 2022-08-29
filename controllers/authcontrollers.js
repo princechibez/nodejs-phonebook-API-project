@@ -77,7 +77,7 @@ exports.postLogin = async (req, res, next) => {
     error.statusCode = 400;
     throw error
   }
-  const user = await Users.findOne({email: email});
+  const user = await Users.findOne({email: email})
   const token = jwt.sign({ userId: user._id }, jwt_secret, { expiresIn: "30m" });
   return res.json({ token, user, message: "Login Successfull..." })
   } catch (err) {

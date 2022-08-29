@@ -13,7 +13,12 @@ const contactProperties = (operationMode) => {
   return [
     body("contactName", "Please provide a name for your contact!")
       .not()
-      .isEmpty(),
+      .isEmpty().custom((value, { req }) => {
+        if (operationMode === "new") {
+          if (value.trim().length > 15) throw new Error("Name must not be greater than 15 chars")
+          return true
+        }
+      }),
     body("contactNumber")
       .isMobilePhone()
       .withMessage("Must be a mobile number")

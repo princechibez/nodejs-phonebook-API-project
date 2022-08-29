@@ -8,7 +8,7 @@ exports.addContact = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       let error = new Error(errors.array()[0].msg);
-      error.statusCode = 401;
+      error.statusCode = 400;
       throw error;
     }
     let user = await User.findById(req.userId);

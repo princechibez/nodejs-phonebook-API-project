@@ -38,6 +38,7 @@ userSchema.methods.createNewContact = async function(newContactProperties) {
     newContacts.push(newContactProperties);
     this.contacts = newContacts;
     return this.save();
+    
   } catch (err) {
     return false
   }
