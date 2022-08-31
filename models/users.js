@@ -100,7 +100,7 @@ userSchema.methods.updateContactProfilePicture = async function (id, image) {
   }
     fs.unlink(this.contacts[contactIndex].contactImage, (err) => {
       if (err) {
-        console.log(err.message)
+        return err
       }
     })
     userContacts[contactIndex].contactImage = image.path
