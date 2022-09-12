@@ -17,7 +17,9 @@ const isAuth = (req, res, next) => {
       next();
     });
   } catch (err) {
-    next(err);
+    let error = new Error("Invalid token");
+    error.statusCode = 401;
+    return res.status(401).json(error);
   }
 };
 
